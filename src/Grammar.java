@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * G = (V, T, P, S)
@@ -18,5 +15,13 @@ public class Grammar {
         terminals = new ArrayList<>();
         productions = new HashMap<>();
         this.startSymbol = startSymbol;
+    }
+
+    public Optional<List<IProductionBody>> getProduction(Variable variable) {
+        return Optional.ofNullable(productions.get(variable));
+    }
+
+    public void addProduction(Variable variable, IProductionBody bodyToAdd) {
+        getProduction(variable).ifPresentOrElse(presentBodies -> presentBodies.add(bodyToAdd), () -> productions.put(variable, List.of(bodyToAdd)));
     }
 }
