@@ -27,7 +27,7 @@ public class VariableOrTerminal {
 
         final VariableOrTerminal other = (VariableOrTerminal) obj;
 
-        return this.symbol == other.symbol;
+        return symbol == other.symbol;
     }
 
     /**
@@ -38,7 +38,7 @@ public class VariableOrTerminal {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 53 * hash + this.symbol;
+        hash = 53 * hash + symbol;
         return hash;
     }
 }

@@ -18,13 +18,13 @@ class GrammarTest {
     @BeforeEach
     void setUp() {
         head1 = new Variable('S');
-        grammar = new Grammar(new Variable(head1));
+        grammar = new Grammar(head1);
         head2 = new Variable('A');
         expectedBody2a = new Terminal('a');
-        expectedBody2b = new TwoVariables(new Variable(head2), new Variable(head2));
+        expectedBody2b = new TwoVariables(head2, head2);
         grammar.addProduction(head2, expectedBody2a);
         grammar.addProduction(head2, expectedBody2b);
-        expectedBodies2 = new ArrayList<>(List.of(new Terminal(expectedBody2a), new TwoVariables(expectedBody2b)));
+        expectedBodies2 = new ArrayList<>(List.of(expectedBody2a, expectedBody2b));
     }
 
     @AfterEach
