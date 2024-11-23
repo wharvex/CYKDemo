@@ -22,6 +22,6 @@ public class Grammar {
     }
 
     public void addProduction(Variable variable, IProductionBody bodyToAdd) {
-        getProduction(variable).ifPresentOrElse(presentBodies -> presentBodies.add(bodyToAdd), () -> productions.put(variable, List.of(bodyToAdd)));
+        getProduction(variable).ifPresentOrElse(presentBodies -> presentBodies.add(bodyToAdd), () -> productions.put(variable, new ArrayList<>(List.of(bodyToAdd))));
     }
 }

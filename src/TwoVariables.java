@@ -6,4 +6,9 @@ public class TwoVariables implements IProductionBody {
         this.firstVariable = firstVariable;
         this.secondVariable = secondVariable;
     }
+
+    public TwoVariables(TwoVariables orig) {
+        firstVariable = new Variable(orig.firstVariable);
+        secondVariable = new Variable(orig.secondVariable);
+    }
 }

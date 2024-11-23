@@ -3,4 +3,7 @@ public class Variable extends VariableOrTerminal {
         super(symbol);
     }
 
+    public Variable(Variable orig) {
+        super(orig);
+    }
 }

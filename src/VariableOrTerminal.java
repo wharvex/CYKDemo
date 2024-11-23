@@ -5,6 +5,10 @@ public class VariableOrTerminal {
         this.symbol = symbol;
     }
 
+    protected VariableOrTerminal(VariableOrTerminal orig) {
+        symbol = orig.symbol;
+    }
+
     /**
      * https://stackoverflow.com/a/8180925/16458003
      *
