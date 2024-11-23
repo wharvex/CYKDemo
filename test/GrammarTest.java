@@ -2,8 +2,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GrammarTest {
@@ -23,7 +21,6 @@ class GrammarTest {
     void testGetProduction() {
         var head = new Variable('A');
         var expectedBody = new Terminal('a');
-        var wrongBody = new Terminal('b');
-        assertEquals(expectedBody, grammar.getProduction(head).orElse(List.of(wrongBody)).getFirst());
+        assertEquals(expectedBody, grammar.getProduction(head).orElseThrow().getFirst());
     }
 }
