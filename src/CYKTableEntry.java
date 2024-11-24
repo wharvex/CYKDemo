@@ -27,6 +27,12 @@ public class CYKTableEntry {
         return j;
     }
 
+    public Set<TwoVariables> cartesianProduct(CYKTableEntry other) {
+        var ret = new HashSet<TwoVariables>();
+        variables.forEach(v -> other.variables.forEach(v2 -> ret.add(new TwoVariables(v, v2))));
+        return ret;
+    }
+
     /**
      * https://stackoverflow.com/a/8180925/16458003
      *
@@ -50,10 +56,6 @@ public class CYKTableEntry {
 
     public void addVariable(Variable variable) {
         variables.add(new Variable(variable));
-    }
-
-    public Set<TwoVariables> cartesianProduct(CYKTableEntry other) {
-        return null;
     }
 
     /**
