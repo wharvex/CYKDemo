@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * G = (V, T, P, S)
@@ -24,14 +25,11 @@ public class Grammar {
 
     public void addProduction(Variable variable, IProductionBody bodyToAdd) {
         addVariable(variable);
-        IProductionBody copyOfBodyToAdd;
+        var copyOfBodyToAdd = copyBody(bodyToAdd);
         if (bodyToAdd instanceof Terminal) {
-            copyOfBodyToAdd = new Terminal((Terminal) bodyToAdd);
             addTerminal((Terminal) bodyToAdd);
-        } else {
-            copyOfBodyToAdd = new TwoVariables((TwoVariables) bodyToAdd);
         }
-        getProduction(variable).ifPresentOrElse(presentBodies -> presentBodies.add(copyOfBodyToAdd), () -> productions.put(variable, new ArrayList<>(List.of(copyOfBodyToAdd))));
+        getProduction(variable).ifPresentOrElse(presentBodies -> presentBodies.add(copyOfBodyToAdd), () -> productions.put(new Variable(variable), new ArrayList<>(List.of(copyOfBodyToAdd))));
     }
 
     public void addVariable(Variable variable) {
@@ -40,5 +38,18 @@ public class Grammar {
 
     public void addTerminal(Terminal terminal) {
         terminals.add(new Terminal(terminal));
+    }
+
+    public Set<Variable> getProductionHeadsFromBody(IProductionBody body) {
+        return variables.stream().filter(v -> getProduction(v).orElseGet(List::of).contains(copyBody(body))).collect(Collectors.toSet());
+    }
+
+    public IProductionBody copyBody(IProductionBody orig) {
+        return switch (orig) {
+            case Terminal t -> new Terminal(t);
+            case TwoVariables tv -> new TwoVariables(tv);
+            case Epsilon ignored -> new Epsilon();
+            default -> throw new IllegalStateException("Unexpected value: " + orig);
+        };
     }
 }
