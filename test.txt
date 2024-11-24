@@ -1,4 +1,3 @@
-hello
-goodbye
-hello
-goodbye
+S → SC
+A → a
+B → b
