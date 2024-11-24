@@ -1,5 +1,6 @@
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class CYKTableEntry {
     private final int i;
@@ -10,6 +11,12 @@ public class CYKTableEntry {
         this.i = i;
         this.j = j;
         this.variables = new HashSet<>();
+    }
+
+    public CYKTableEntry(CYKTableEntry orig) {
+        this.i = orig.i;
+        this.j = orig.j;
+        this.variables = orig.variables.stream().map(Variable::new).collect(Collectors.toSet());
     }
 
     public int getI() {
