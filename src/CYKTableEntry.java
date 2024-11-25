@@ -5,12 +5,18 @@ import java.util.stream.Collectors;
 public class CYKTableEntry {
     private final int i;
     private final int j;
-    private final Set<Variable> variables;
+    private Set<Variable> variables;
 
     public CYKTableEntry(int i, int j) {
         this.i = i;
         this.j = j;
         this.variables = new HashSet<>();
+    }
+
+    public CYKTableEntry(int i, int j, Set<Variable> variables) {
+        this.i = i;
+        this.j = j;
+        this.variables = variables;
     }
 
     public CYKTableEntry(CYKTableEntry orig) {

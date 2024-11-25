@@ -19,6 +19,30 @@ public class Grammar {
         addVariable(startSymbol);
     }
 
+    public static Grammar sampleGrammar() {
+        var varS = new Variable('S');
+        var varA = new Variable('A');
+        var varB = new Variable('B');
+        var varC = new Variable('C');
+        var termA = new Terminal('a');
+        var termB = new Terminal('b');
+        var pairAB = new TwoVariables(varA, varB);
+        var pairBC = new TwoVariables(varB, varC);
+        var pairBA = new TwoVariables(varB, varA);
+        var pairCC = new TwoVariables(varC, varC);
+        var ret = new Grammar(varS);
+        ret.addProduction(varS, pairAB);
+        ret.addProduction(varS, pairBC);
+        ret.addProduction(varA, pairBA);
+        ret.addProduction(varA, pairBA);
+        ret.addProduction(varA, termA);
+        ret.addProduction(varB, pairCC);
+        ret.addProduction(varB, termB);
+        ret.addProduction(varC, pairAB);
+        ret.addProduction(varC, termA);
+        return ret;
+    }
+
     public Optional<List<IProductionBody>> getProduction(Variable variable) {
         return Optional.ofNullable(productions.get(new Variable(variable)));
     }
