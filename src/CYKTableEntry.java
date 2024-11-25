@@ -39,6 +39,10 @@ public class CYKTableEntry {
         return ret;
     }
 
+    public void addVariable(Variable variable) {
+        variables.add(new Variable(variable));
+    }
+
     /**
      * https://stackoverflow.com/a/8180925/16458003
      *
@@ -58,10 +62,6 @@ public class CYKTableEntry {
         final CYKTableEntry other = (CYKTableEntry) obj;
 
         return getI() == other.getI() && getJ() == other.getJ() && variables.equals(other.variables);
-    }
-
-    public void addVariable(Variable variable) {
-        variables.add(new Variable(variable));
     }
 
     /**

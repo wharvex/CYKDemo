@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.stream.IntStream;
 
 
 public class Helper {
@@ -26,16 +28,16 @@ public class Helper {
             char[] eachLetter = sb.toString().toCharArray();
             System.out.println(eachLetter[4]);
 
-            for(int i=0; i<eachLetter.length; i++) {
+            for (int i = 0; i < eachLetter.length; i++) {
                 temporaryNonTerminal = eachLetter[i];
                 i++;
-                if(eachLetter[i] == '→') {
+                if (eachLetter[i] == '→') {
                     i++;
-                    while(eachLetter[i] != '\r') {
+                    while (eachLetter[i] != '\r') {
                         rightSide.append(eachLetter[i]);
                         i++;
                     }
-                    if(eachLetter[i] == '\r'){
+                    if (eachLetter[i] == '\r') {
                         grammer.put(temporaryNonTerminal, rightSide.toString());
                         temporaryNonTerminal = ' ';
                         rightSide = new StringBuilder();
@@ -45,5 +47,9 @@ public class Helper {
             }
             return grammer;
         }
+    }
+
+    public static List<IJPairPair> getIJPairsForComparison(int targetI, int targetJ) {
+        return IntStream.range(targetI, targetJ).mapToObj(k -> new IJPairPair(new IJPair(targetI, k), new IJPair(k + 1, targetJ))).toList();
     }
 }
