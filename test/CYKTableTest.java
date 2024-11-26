@@ -2,6 +2,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
@@ -15,6 +16,8 @@ class CYKTableTest {
     CYKTableEntry expectedEntry_CT2;
     CYKTable table_CT3;
     List<CYKTableEntry> expectedEntries_CT3;
+    CYKTable table_CT4;
+    List<CYKTableEntry> expectedEntries_CT4;
 
     @BeforeEach
     void setUp() {
@@ -31,6 +34,7 @@ class CYKTableTest {
         table.addEntry(usedEntry_CT2);
 
         setUp_CT3();
+        setUp_CT4();
     }
 
     void setUp_CT3() {
@@ -64,6 +68,44 @@ class CYKTableTest {
         expectedEntries_CT3 = List.of(expectedEntry1, expectedEntry2, expectedEntry3, expectedEntry4, expectedEntry5);
     }
 
+    void setUp_CT4() {
+        table_CT4 = new CYKTable(CYKTable.sampleInputString(), Grammar.sampleGrammar());
+        var varA = new Variable('A');
+        var varB = new Variable('B');
+        var varC = new Variable('C');
+        var varS = new Variable('S');
+        var expectedEntry1I = 1;
+        var expectedEntry1J = 2;
+        var expectedEntry2I = 2;
+        var expectedEntry2J = 3;
+        var expectedEntry3I = 3;
+        var expectedEntry3J = 4;
+        var expectedEntry4I = 4;
+        var expectedEntry4J = 5;
+
+        // { S, A }
+        var expectedEntry1 = new CYKTableEntry(expectedEntry1I, expectedEntry1J);
+        expectedEntry1.addVariable(varS);
+        expectedEntry1.addVariable(varA);
+
+        // { B }
+        var expectedEntry2 = new CYKTableEntry(expectedEntry2I, expectedEntry2J);
+        expectedEntry2.addVariable(varB);
+
+        // { S, C }
+        var expectedEntry3 = new CYKTableEntry(expectedEntry3I, expectedEntry3J);
+        expectedEntry3.addVariable(varS);
+        expectedEntry3.addVariable(varC);
+
+        // { S, A }
+        var expectedEntry4 = new CYKTableEntry(expectedEntry4I, expectedEntry4J);
+        expectedEntry4.addVariable(varS);
+        expectedEntry4.addVariable(varA);
+
+        var expectedEntries_CT4a = List.of(expectedEntry1, expectedEntry2, expectedEntry3, expectedEntry4);
+        expectedEntries_CT4 = Stream.concat(expectedEntries_CT3.stream(), expectedEntries_CT4a.stream()).toList();
+    }
+
     @Test
     void testGetEntry_CT2() {
         var actualEntry_CT2 = table.getEntry(usedI_CT2, usedJ_CT2);
@@ -74,5 +116,13 @@ class CYKTableTest {
     void testAddBottomRow_CT3() {
         table_CT3.addBottomRow();
         assertIterableEquals(expectedEntries_CT3, table_CT3.getEntries());
+    }
+
+    @Test
+    void testAddNonBottomRow_CT4() {
+        table_CT4.addBottomRow();
+        table_CT4.addNonBottomRow(2);
+        var actualEntries_CT4 = table_CT4.getEntries();
+        assertIterableEquals(expectedEntries_CT4, actualEntries_CT4);
     }
 }

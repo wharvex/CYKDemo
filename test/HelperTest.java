@@ -3,7 +3,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 class HelperTest {
     List<IJPairPair> expectedIJPairPairs_H2;
@@ -21,6 +21,6 @@ class HelperTest {
 
     @Test
     void testGetIJPairsForComparison_H2() {
-        assertEquals(expectedIJPairPairs_H2, Helper.getIJPairsForComparison(2, 4));
+        assertIterableEquals(expectedIJPairPairs_H2, Helper.getIJPairsForComparison(2, 4));
     }
 }

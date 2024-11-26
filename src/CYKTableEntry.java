@@ -25,6 +25,10 @@ public class CYKTableEntry {
         this.variables = orig.variables.stream().map(Variable::new).collect(Collectors.toSet());
     }
 
+    public Set<Variable> getVariables() {
+        return variables;
+    }
+
     public int getI() {
         return i;
     }
