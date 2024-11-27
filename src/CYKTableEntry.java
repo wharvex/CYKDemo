@@ -47,6 +47,10 @@ public class CYKTableEntry {
         variables.add(new Variable(variable));
     }
 
+    public boolean containsS() {
+        return getVariables().contains(new Variable('S'));
+    }
+
     /**
      * https://stackoverflow.com/a/8180925/16458003
      *

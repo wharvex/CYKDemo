@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CYKTableTest {
     CYKTable table;
@@ -24,6 +23,7 @@ class CYKTableTest {
     List<CYKTableEntry> expectedEntries_CT6;
     CYKTable table_CT7;
     List<CYKTableEntry> expectedEntries_CT7;
+    CYKTable table_CT8;
 
     @BeforeEach
     void setUp() {
@@ -44,6 +44,8 @@ class CYKTableTest {
         setUp_CT5();
         setUp_CT6();
         setUp_CT7();
+
+        table_CT8 = new CYKTable(CYKTable.sampleInputString(), Grammar.sampleGrammar());
     }
 
     // Row 1
@@ -234,5 +236,15 @@ class CYKTableTest {
         table_CT7.addNonBottomRow(5);
         var actualEntries_CT7 = table_CT7.getEntries();
         assertIterableEquals(expectedEntries_CT7, actualEntries_CT7);
+    }
+
+    @Test
+    void testGetAnswer_CT8() {
+        table_CT8.addBottomRow();
+        table_CT8.addNonBottomRow(2);
+        table_CT8.addNonBottomRow(3);
+        table_CT8.addNonBottomRow(4);
+        table_CT8.addNonBottomRow(5);
+        assertTrue(table_CT8.getAnswer());
     }
 }

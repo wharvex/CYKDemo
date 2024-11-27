@@ -22,6 +22,10 @@ public class CYKTable {
         return entries;
     }
 
+    public int getInputLen() {
+        return inputString.size();
+    }
+
     public CYKTableEntry getEntry(int i, int j) {
         return entries.stream().filter(te -> te.getI() == i && te.getJ() == j).findFirst().orElseThrow();
     }
@@ -46,8 +50,10 @@ public class CYKTable {
             var varPairs = idxPairs.stream().map(pairPair -> {
                 var f = getEntry(pairPair.getLeftPair().getI(), pairPair.getLeftPair().getJ());
                 var g = getEntry(pairPair.getRightPair().getI(), pairPair.getRightPair().getJ());
+                // Product operation.
                 return f.cartesianProduct(g);
             }).reduce(new HashSet<>(), (a, b) -> {
+                // Union operation.
                 a.addAll(b);
                 return a;
             });
@@ -56,5 +62,12 @@ public class CYKTable {
             varPairs.forEach(tv -> entry.getVariables().addAll(grammar.getProductionHeadsFromBody(tv)));
             addEntry(entry);
         });
+    }
+
+    public boolean getAnswer() {
+        var lastEntry = getEntries().getLast();
+        if (!(lastEntry.getI() == 1 && lastEntry.getJ() == getInputLen()))
+            throw new IllegalStateException("Table in an invalid state for calling `getAnswer`.");
+        return lastEntry.containsS();
     }
 }
