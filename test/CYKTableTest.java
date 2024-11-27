@@ -22,6 +22,8 @@ class CYKTableTest {
     List<CYKTableEntry> expectedEntries_CT5;
     CYKTable table_CT6;
     List<CYKTableEntry> expectedEntries_CT6;
+    CYKTable table_CT7;
+    List<CYKTableEntry> expectedEntries_CT7;
 
     @BeforeEach
     void setUp() {
@@ -41,6 +43,7 @@ class CYKTableTest {
         setUp_CT4();
         setUp_CT5();
         setUp_CT6();
+        setUp_CT7();
     }
 
     // Row 1
@@ -164,6 +167,25 @@ class CYKTableTest {
         expectedEntries_CT6 = Stream.concat(expectedEntries_CT5.stream(), expectedEntries_CT6a.stream()).toList();
     }
 
+    // Row 5
+    void setUp_CT7() {
+        table_CT7 = new CYKTable(CYKTable.sampleInputString(), Grammar.sampleGrammar());
+        var varA = new Variable('A');
+        var varC = new Variable('C');
+        var varS = new Variable('S');
+        var expectedEntry1I = 1;
+        var expectedEntry1J = 5;
+
+        // { S, A, C }
+        var expectedEntry1 = new CYKTableEntry(expectedEntry1I, expectedEntry1J);
+        expectedEntry1.addVariable(varS);
+        expectedEntry1.addVariable(varA);
+        expectedEntry1.addVariable(varC);
+
+        var expectedEntries_CT7a = List.of(expectedEntry1);
+        expectedEntries_CT7 = Stream.concat(expectedEntries_CT6.stream(), expectedEntries_CT7a.stream()).toList();
+    }
+
     @Test
     void testGetEntry_CT2() {
         var actualEntry_CT2 = table.getEntry(usedI_CT2, usedJ_CT2);
@@ -201,5 +223,16 @@ class CYKTableTest {
         table_CT6.addNonBottomRow(4);
         var actualEntries_CT6 = table_CT6.getEntries();
         assertIterableEquals(expectedEntries_CT6, actualEntries_CT6);
+    }
+
+    @Test
+    void testAddNonBottomRow_CT7() {
+        table_CT7.addBottomRow();
+        table_CT7.addNonBottomRow(2);
+        table_CT7.addNonBottomRow(3);
+        table_CT7.addNonBottomRow(4);
+        table_CT7.addNonBottomRow(5);
+        var actualEntries_CT7 = table_CT7.getEntries();
+        assertIterableEquals(expectedEntries_CT7, actualEntries_CT7);
     }
 }
