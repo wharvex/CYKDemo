@@ -20,6 +20,8 @@ class CYKTableTest {
     List<CYKTableEntry> expectedEntries_CT4;
     CYKTable table_CT5;
     List<CYKTableEntry> expectedEntries_CT5;
+    CYKTable table_CT6;
+    List<CYKTableEntry> expectedEntries_CT6;
 
     @BeforeEach
     void setUp() {
@@ -38,6 +40,7 @@ class CYKTableTest {
         setUp_CT3();
         setUp_CT4();
         setUp_CT5();
+        setUp_CT6();
     }
 
     // Row 1
@@ -137,6 +140,30 @@ class CYKTableTest {
         expectedEntries_CT5 = Stream.concat(expectedEntries_CT4.stream(), expectedEntries_CT5a.stream()).toList();
     }
 
+    // Row 4
+    void setUp_CT6() {
+        table_CT6 = new CYKTable(CYKTable.sampleInputString(), Grammar.sampleGrammar());
+        var varA = new Variable('A');
+        var varC = new Variable('C');
+        var varS = new Variable('S');
+        var expectedEntry1I = 1;
+        var expectedEntry1J = 4;
+        var expectedEntry2I = 2;
+        var expectedEntry2J = 5;
+
+        // { }
+        var expectedEntry1 = new CYKTableEntry(expectedEntry1I, expectedEntry1J);
+
+        // { S, A, C }
+        var expectedEntry2 = new CYKTableEntry(expectedEntry2I, expectedEntry2J);
+        expectedEntry2.addVariable(varS);
+        expectedEntry2.addVariable(varA);
+        expectedEntry2.addVariable(varC);
+
+        var expectedEntries_CT6a = List.of(expectedEntry1, expectedEntry2);
+        expectedEntries_CT6 = Stream.concat(expectedEntries_CT5.stream(), expectedEntries_CT6a.stream()).toList();
+    }
+
     @Test
     void testGetEntry_CT2() {
         var actualEntry_CT2 = table.getEntry(usedI_CT2, usedJ_CT2);
@@ -164,5 +191,15 @@ class CYKTableTest {
         table_CT5.addNonBottomRow(3);
         var actualEntries_CT5 = table_CT5.getEntries();
         assertIterableEquals(expectedEntries_CT5, actualEntries_CT5);
+    }
+
+    @Test
+    void testAddNonBottomRow_CT6() {
+        table_CT6.addBottomRow();
+        table_CT6.addNonBottomRow(2);
+        table_CT6.addNonBottomRow(3);
+        table_CT6.addNonBottomRow(4);
+        var actualEntries_CT6 = table_CT6.getEntries();
+        assertIterableEquals(expectedEntries_CT6, actualEntries_CT6);
     }
 }
