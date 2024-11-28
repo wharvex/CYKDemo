@@ -9,7 +9,7 @@ public class Grammar {
     private final Set<Variable> variables;
     private final Set<Terminal> terminals;
     private final Map<Variable, List<IProductionBody>> productions;
-    private final Variable startSymbol;
+    private Variable startSymbol;
 
     public Grammar(Variable startSymbol) {
         variables = new HashSet<>();
@@ -17,6 +17,12 @@ public class Grammar {
         productions = new HashMap<>();
         this.startSymbol = new Variable(startSymbol);
         addVariable(startSymbol);
+    }
+
+    public Grammar() {
+        variables = new HashSet<>();
+        terminals = new HashSet<>();
+        productions = new HashMap<>();
     }
 
     public static Grammar sampleGrammar() {
