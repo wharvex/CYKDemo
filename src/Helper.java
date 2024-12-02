@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
@@ -94,6 +95,8 @@ public class Helper {
     }
 
     public static List<Terminal> getTermListFromStr(String str) {
+        if (str.isEmpty())
+            return new ArrayList<>(List.of(new Epsilon()));
         return str.chars().mapToObj(c -> new Terminal((char) c)).toList();
     }
 }

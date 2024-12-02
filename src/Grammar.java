@@ -76,9 +76,9 @@ public class Grammar {
 
     public IProductionBody copyBody(IProductionBody orig) {
         return switch (orig) {
+            case Epsilon ignored -> new Epsilon();
             case Terminal t -> new Terminal(t);
             case TwoVariables tv -> new TwoVariables(tv);
-            case Epsilon ignored -> new Epsilon();
             default -> throw new IllegalStateException("Unexpected value: " + orig);
         };
     }
